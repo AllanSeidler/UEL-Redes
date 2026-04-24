@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Carregar os arquivos CSV
-file_paths = ['/caminho/para/seu/csv']
+file_paths = ['pacotes/dia03-casa.csv']
 dfs = [pd.read_csv(path, encoding='ISO-8859-1') for path in file_paths]
 
 # Unir os DataFrames em um único DataFrame consolidado
@@ -22,7 +22,7 @@ tabela_protocolo = df_consolidado.groupby('Protocol').agg({
 }).reset_index()
 tabela_protocolo.columns = ['Protocol', 'Packet Count', 'Total Bytes']
 tabela_protocolo['% Total Packets'] = (tabela_protocolo['Packet Count'] / total_pacotes) * 100
-tabela_protocolo['% Total Bytes'] = (tabela_protocolo['Total Bytes'] / df_consolidado['Length'].sum()) * 100
+#tabela_protocolo['% Total Bytes'] = (tabela_protocolo['Total Bytes'] / df_consolidado['Length'].sum()) * 100
 
 # Análise 05: Consumo total da rede no período monitorado
 total_bytes = df_consolidado['Length'].sum()
@@ -37,10 +37,7 @@ sites_acessados = sites_acessados.dropna()['site'].value_counts().reset_index()
 sites_acessados.columns = ['Site', 'Access Count']
 
 # Exibir apenas os 5 sites mais acessados
-sites_acessados_top5 = sites_acessados.head(5)
-
-print("\n07) Sites mais acessados:")
-print(sites_acessados_top5)
+sites_acessados_top5 = sites_acessados.head(30)
 
 
 # Exibir os resultados
@@ -55,4 +52,4 @@ print(f"Total de pacotes: {total_pacotes}, Total de bytes: {total_bytes}")
 print("\n06) Tabela com o tamanho dos pacotes:")
 print(tabela_tamanho_pacotes)
 print("\n07) Sites mais acessados:")
-print(sites_acessados)
+print(sites_acessados_top5)
